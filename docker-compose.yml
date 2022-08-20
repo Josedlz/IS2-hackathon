@@ -1,0 +1,33 @@
+version: '3.7'
+volumes:
+  docker:
+
+services:
+  database:
+    image: postgres
+    # command: sh -c " cd data/db && ls"  
+    environment:
+      POSTGRES_USER : user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: database_postgres_image
+    ports:
+      - '5433:5432'
+    volumes:
+      - docker:/data/db
+
+  nextapp:
+    build:
+      context: ./hackathon-1
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_NAME: postgres
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_HOST: database_postgres_image
+      DB_LOCAL_URL: postgres://database:5432/next-docker
+    volumes:
+      - ./hackathon-1:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - database
