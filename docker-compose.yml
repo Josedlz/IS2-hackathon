@@ -25,8 +25,12 @@ services:
       POSTGRES_PASSWORD: pass
       POSTGRES_HOST: database_postgres_image
       DB_LOCAL_URL: postgres://database:5432/next-docker
+    container_name: nextapp
+    restart: always
     volumes:
       - ./hackathon-1:/app
+      - /app/node_modules
+      - /app/.next
     ports:
       - 3000:3000
     depends_on:

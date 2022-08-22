@@ -15,8 +15,12 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
+        <h1 className={styles.subtitle}>
           Welcome to HR Aglomeracion APP
+        </h1>
+
+        <h1 className={styles.title}>
+          FISCALIZADOR
         </h1>
 
         <p className={styles.description}>
