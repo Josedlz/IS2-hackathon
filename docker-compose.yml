@@ -7,11 +7,12 @@ services:
     image: postgres
     # command: sh -c " cd data/db && ls"  
     environment:
-      POSTGRES_USER : user
+      POSTGRES_NAME: postgres
+      POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
-      POSTGRES_DB: database_postgres_image
+      POSTGRES_HOST: database_postgres_image
     ports:
-      - '5433:5432'
+      - '5431:5432'
     volumes:
       - docker:/data/db
 
