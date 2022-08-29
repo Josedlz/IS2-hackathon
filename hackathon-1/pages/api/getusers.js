@@ -3,19 +3,14 @@
 import conn from  '../../lib/db.js'
 
 export default async(req, res) =>{
-  // res.status(200).json({ name: 'John Doe' })
-
   try{
     console.log('a');
     const query = `SELECT * FROM users`;
     const result = await conn.query(query)
     res.status(200).json(result); 
+    
   }
   catch(error){
     console.log('error', error)
-  
   }
-
-
 }
-
