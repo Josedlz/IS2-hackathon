@@ -5,7 +5,9 @@ volumes:
 services:
   database:
     image: postgres
-    # command: sh -c " cd data/db && ls"  
+    build:   
+      context: hackathon-1/db-container
+      dockerfile: Dockerfile
     environment:
       POSTGRES_NAME: postgres
       POSTGRES_USER: user
@@ -14,7 +16,7 @@ services:
     ports:
       - '5431:5432'
     volumes:
-      - docker:/data/db
+      - ./hackathon-1:/data/db
 
   nextapp:
     build:
