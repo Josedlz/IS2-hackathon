@@ -1,11 +1,18 @@
+DROP DATABASE IF EXISTS postgres;    
+
+CREATE DATABASE postgres;    
+
+
+\c postgres; 
+
+
 CREATE TABLE users (
 	id int PRIMARY KEY NOT NULL,
 	first_name varchar,
-	last_name varchar,
-	email varchar,
+	last_name varchar,	
+	email varchar UNIQUE,
 	is_admin bool,
-	password varchar,
-	salt varchar
+	password varchar
 );
 create sequence users_id_seq owned by users.id;
 alter table users
@@ -104,8 +111,7 @@ INSERT INTO users(
 	last_name, 
 	email, 
 	is_admin, 
-	password, 
-	salt
+	password
 )
 VALUES 
 (
@@ -113,65 +119,59 @@ VALUES
 	'Castillo',
 	'arnol.castillo@utec.edu.pe',
 	TRUE,
-	'passwordhasheada',
-	'salt'
+	'$2a$11$8JdHuebljWXcTYbxpwU5s.iyUlC7D9imwH7H/nZmddKD1rTxUunWm'-- 'passwordhasheada'
 ),
 (	
 	'Jose',
 	'de Lama',
 	'jose.delama@utec.edu.pe',
 	FALSE,
-	'a',
-	'b'
+	'$2a$11$PlZB3PQvL0vS/ycFtunt/.ZrL12GKo9XfX.ZMEUC19QzS8S217RjW'-- 'a'
 ),
 (
 	'Mauricio',
 	'Bernuy',
 	'mauricio.bernuy@utec.edu.pe',
 	FALSE,
-	'contrase;a',
-	'hasheadaysalteada'
+	'$2a$11$6ffGkutwxwACAM8XVyoYeOJLqr3YzS5h/fALsDfhqRUcU5.a7KFjW'-- 'contrase;a'
 ),
 (
 	'Ignacio',
 	'Rubio',
 	'ignacio.rubio@utec.edu.pe',
 	FALSE, 
-	'la mejor',
-	'contrase;a'
+	'$2a$11$cZYgHfSCvmnhtqCW4/8xVul0.N0fuw/4AqHEjfHZWzi8gQ90OxvJO'-- 'la mejor'
 ),
 (
 	'Claudia',
 	'Noche',
 	'claudia.noche@utec.edu.pe',
 	FALSE,
-	'si',
-	'si'
+	'$2a$11$mCSvWye85afgZlgyXVWfZeNcEQwYM4IErAfxiWpMEEQbf6A72WIlK' -- 'si'
 ),
 (
 	'Esteban',
 	'Principe',
 	'esteban.principe@utec.edu.pe',
 	FALSE,
-	'contra',
-	'se;a'
+	'$2a$11$nHnVBVg1mQZaweqgGuQnyuhA2/B0tA21GBFwGY8lujC9f0rtdn112'	-- 'contra'
 );
 
---PROJECTS
-INSERT INTO projects 
-(
-	user_id,
-	title,
-	description
-)
-VALUES 
-(
-	6,
-	'App para trackear animalitos perdidos',
-	'Una aplicacion que registrara fotos y ubicaciones de animales que podrian estar perdidos, para que cualquiera pueda verlos publicamente'
-),
-(
-	6,
-	'Proyecto dummy',
-	'Proyecto dummy'
-);
+-- --PROJECTS
+-- INSERT INTO projects 
+-- (
+-- 	user_id,
+-- 	title,
+-- 	description
+-- )
+-- VALUES 
+-- (
+-- 	6,
+-- 	'App para trackear animalitos perdidos',
+-- 	'Una aplicacion que registrara fotos y ubicaciones de animales que podrian estar perdidos, para que cualquiera pueda verlos publicamente'
+-- ),
+-- (
+-- 	6,
+-- 	'Proyecto dummy',
+-- 	'Proyecto dummy'
+-- );
