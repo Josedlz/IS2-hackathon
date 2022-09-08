@@ -20,6 +20,7 @@ const databaseServiceFactory = () => {
 		return user[0];
 	};
 
+	// get all users, should need to auth as admin xd
 	const getAllUsers = async () => {
 		const user = await knex(TABLE).select();
 		if (user.length === 0) {
@@ -28,8 +29,6 @@ const databaseServiceFactory = () => {
 
 		return user;
 	};
-
-	// get all users
 
     // add to tabele new register
     const enrollUser = async (first_name, last_name, email, password,is_admin) => {
@@ -47,9 +46,11 @@ const databaseServiceFactory = () => {
 
 		return newuser;
 	};
+	
+	/* si quieren hacer cualquier cosa con la database la pueden armar como una funcion
+	parecida a las de arriba, usando knex para seleccionar o insertar*/
 
-
-	return { getUser, getAllUsers, enrollUser };
+	return { getUser, getAllUsers, enrollUser /*, resto de funciones */ };
 };
 
 module.exports = {
