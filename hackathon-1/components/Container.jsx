@@ -1,9 +1,10 @@
-import Task from "./task"
+import TaskInstance from "./TaskInstance"
 
 const Container = (props) => {
 
     const taskslist = props.tasks.map((task) => {
-        return <Task key={task.id} toggleTask={props.toggleTask} {...task} />
+        // console.log(props.tasks)
+        return <TaskInstance key={task.id} toggleTask={props.toggleTask} {...task} />
     })
 
     const handleComplete = () => {

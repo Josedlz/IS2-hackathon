@@ -216,7 +216,7 @@ const databaseServiceFactory = () => {
 	};
 
 	const getTask = async (task_id) => {
-		const task = await knex(STORIES_TABLE).select().where("id", task_id);
+		const task = await knex(TASKS_TABLE).select().where("id", task_id);
 		if (task.length === 0) {
 			throw new Error("Task not found");
 		}

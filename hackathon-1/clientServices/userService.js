@@ -16,7 +16,21 @@ const userServiceFactory = () => {
 		});
 		// probs more stuff to add, also have to be authed as admin
 	}
-	return { login, register };
+	
+	function getTasks(email) {
+		return axios.get(`/api/getUserTasks`, {
+			email
+		});
+	}
+
+	function markTaskDone(task_id) {
+		console.log(task_id);
+		return axios.post(`/api/markTaskComplete`, {
+			task_id
+		});
+	}
+
+	return { login, register, getTasks, markTaskDone };
 };
 
 module.exports = {

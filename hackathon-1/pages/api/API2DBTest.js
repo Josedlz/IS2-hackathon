@@ -18,35 +18,7 @@ withSessionRoute
 	}
     
 	try {
-        // const user = req.session.email;
-		// const user = req.session.email;
-
-        // check if checking for own 
-
-        // if (user) {
-        // if (user === email) {
         if(true){
-
-			// const hashedpassword = bcrypt.hash(
-			// 	password,
-			// 	process.env.SALT_ROUNDS
-			// );
-
-			// console.log(password,saltRounds);
-
-			// bcrypt.hash(password, saltRounds, function (error, hash) {
-			// 	console.log(first_name,last_name,email,hash,is_admin)
-			// 	dbService.enrollUser(
-			// 		first_name,
-			// 		last_name,
-			// 		email,
-			// 		hash,
-			// 		is_admin
-			// 	);
-
-			// 	if (error)
-			// 		throw Error("bad insert")
-			// });
             
             //* PROJECTS */ 
 
