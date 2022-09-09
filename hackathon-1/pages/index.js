@@ -3,35 +3,50 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { withSessionSsr } from "../lib/session";
 import Button from "@mui/material/Button";
+import Navbar from "../components/Navbar";
 
-export default function Home({ user }) {
-  return (
-    <div>
-      <Head>
-        <title>Home</title>
-      </Head>
+export default function Home({ user, admin }) {
+	console.log(user);
+	console.log(admin);
+	let msg = "";
+	if (admin === true) msg = "you're an admin!";
+	else msg = "you're not an admin :c";
 
-      <h2>Welcome to the home page {user.email}!</h2>
-      <a href='/api/logout'>Logout</a>
-    </div>
-  )
+	return (
+		<div>
+			<Navbar />
+			<div className="centered">
+				<Head>
+					<title>Home</title>
+				</Head>
+				<div className="stackv">
+					<h2>Welcome to the home page {user}!</h2>
+					<h2>admin: {msg}</h2>
+					
+          <a href="/taskboard">Go to my tasks</a>
+          <hr></hr>
+
+					<a href="/api/logout">Log out</a>
+				</div>
+			</div>
+		</div>
+	);
 }
 
-
 export const getServerSideProps = withSessionSsr(
-  async function getServerSideProps({ req, res }) {
-    const user = req.session.email;
-    console.log(user)
+	async function getServerSideProps({ req, res }) {
+		const user = req.session.email;
 
-    if (user === undefined) {
-      console.log("no user")
-      res.setHeader("location", "/login");
-      res.statusCode = 302;
-      res.end();
-      return { props: {} };
-    }
+		if (user === undefined) {
+			console.log("no user");
+			res.setHeader("location", "/login");
+			res.statusCode = 302;
+			res.end();
+			return { props: {} };
+		}
 
-    return {
-      props: { user: req.session.email },
-    };
-});
+		return {
+			props: { user: req.session.email, admin: req.session.isAdmin },
+		};
+	}
+);

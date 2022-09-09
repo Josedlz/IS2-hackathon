@@ -37,50 +37,56 @@ export default function Login() {
 			) : (
 				<>
 					{!user.isLoggedIn && (
+						
 						<form onSubmit={handleSubmit}>
-							<div className="imgcontainer">
-								<img
-									src="https://i.imgur.com/H0AuOna.png"
-									alt="Avatar"
-									className="avatar"
-                                    style={{
-                                    height: "200px",
-                                    width: "200px",
-                                    borderRadius: 150,
-                                    overflow: "hidden",
-                                    borderWidth: 3,
-                                    borderColor: "red"
-                                }}
-								/>
-                                
-							</div>
+							<div>
+								<h1>LOGIN TO FISCALIZADOR</h1>
+								<div className="imgcontainer">
+									<img
+										src="https://i.imgur.com/H0AuOna.png"
+										alt="Avatar"
+										className="avatar"
+										style={{
+										height: "200px",
+										width: "200px",
+										borderRadius: 150,
+										overflow: "hidden",
+										borderWidth: 3,
+										borderColor: "red"
+									}}
+									/>
+									
+								</div>
 
-							<div className="container">
-								<label htmlFor="email">
-									<b>Email</b>
-								</label>
-								<input
-									type="email"
-									placeholder="Enter Email"
-									name="email"
-									required
-									onChange={emailHandler}
-								/>
+								<div className="container">
+									<label htmlFor="email">
+										<b>Email</b>
+									</label>
+									<input
+										type="email"
+										placeholder="Enter Email"
+										name="email"
+										required
+										onChange={emailHandler}
+									/>
 
-								<label htmlFor="psw">
-									<b>Password</b>
-								</label>
-								<input
-									type="password"
-									placeholder="Enter Password"
-									name="psw"
-									required
-									onChange={passwordHandler}
-								/>
+									<label htmlFor="psw">
+										<b>Password</b>
+									</label>
+									<input
+										type="password"
+										placeholder="Enter Password"
+										name="psw"
+										required
+										onChange={passwordHandler}
+									/>
 
-								<button type="submit">Login</button>
+									<button type="submit">Login</button>
+								</div>
+								
 							</div>
 						</form>
+						
 					)}
 				</>
 			)}

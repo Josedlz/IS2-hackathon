@@ -1,0 +1,117 @@
+import { databaseServiceFactory } from "../../services/databaseService";
+import { withSessionRoute } from "../../lib/session";
+
+// import bcrypt
+
+const dbService = databaseServiceFactory();
+
+export default // should be logged in
+withSessionRoute
+(async (req, res) => {
+	// const ERROR_CREDENTIALS = "Invalid email and/or password";
+
+	const method = req.method.toLowerCase();
+	// const { email } = req.body;
+
+	if (method !== "post") {
+		return res.status(405).end(`Method ${req.method} Not allowed`);
+	}
+    
+	try {
+        // const user = req.session.email;
+		// const user = req.session.email;
+
+        // check if checking for own 
+
+        // if (user) {
+        // if (user === email) {
+        if(true){
+
+			// const hashedpassword = bcrypt.hash(
+			// 	password,
+			// 	process.env.SALT_ROUNDS
+			// );
+
+			// console.log(password,saltRounds);
+
+			// bcrypt.hash(password, saltRounds, function (error, hash) {
+			// 	console.log(first_name,last_name,email,hash,is_admin)
+			// 	dbService.enrollUser(
+			// 		first_name,
+			// 		last_name,
+			// 		email,
+			// 		hash,
+			// 		is_admin
+			// 	);
+
+			// 	if (error)
+			// 		throw Error("bad insert")
+			// });
+            
+            //* PROJECTS */ 
+
+
+            const project = await dbService.createProject("proyecto pogaso", "el proyecto pogaso se encargara de facilitar el pogeo en los espacios de trabajo a nivel multinacional.")
+            console.log(project[0])
+			const user2project = await dbService.addUserToProject("mauricio.bernuy@utec.edu.pe",project[0].id)
+			const getproject = await dbService.getProject(project[0].id)
+			const getuserprojects = await dbService.getUserProjects("mauricio.bernuy@utec.edu.pe")
+            
+            //* EPICS */ 
+
+            const epic = await dbService.createEpic("Primer Epic: Pogerizado y Carrearizado", 
+                                                    "no necesita descripción bro.", 
+                                                    project[0].id)
+                                                    
+            console.log(epic[0])
+			const getepic = await dbService.getEpic(epic[0].id)
+			const getprojectepics = await dbService.getProjectEpics(project[0].id)
+            
+	        //* STORIES */ 
+            
+            const story = await dbService.createStory("Primer Story: Diseñar un PPT locaso", 
+                                                    "para presentacion a las 6pm", 
+                                                    epic[0].id)
+                                                    
+            console.log(story[0])
+			const getstory = await dbService.getStory(story[0].id)
+			const getepicstories = await dbService.getEpicStories(epic[0].id)
+            
+	        //* TASKS */ 
+            
+            const task = await dbService.createTask("mauricio.bernuy@utec.edu.pe", 
+                                                    "Llenar info del ppt",
+                                                    "añadir datos del proyecto",
+                                                    "09/09/2022, 11:00AM",
+                                                    "09/09/2022, 6:00PM",
+                                                    story[0].id)
+                                                    
+            console.log(task[0])
+			const gettask = await dbService.getTask(task[0].id)
+			// const getstorytasks = await dbService.getStoryTasks(story[0].id)
+
+			const user2project2 = await dbService.addUserToProject("claudia.noche@utec.edu.pe",project[0].id)
+            
+            const task2 = await dbService.createTask("claudia.noche@utec.edu.pe", 
+                                                    "Diseñar layout del ppt",
+                                                    "ponerle un buen formato y que se vea bien",
+                                                    "09/09/2022, 11:00AM",
+                                                    "09/09/2022, 6:00PM",
+                                                    story[0].id)
+                                                    
+            console.log(task2[0])
+			const gettask2 = await dbService.getTask(task2[0].id)
+			const getstorytasks = await dbService.getStoryTasks(story[0].id)
+
+            res.status(200).json({ msg: "test response", gettask, user2project2, gettask2,  getstorytasks});
+            
+			return;
+		}
+	} catch (error) {
+        const DatabaseError = error.message
+		console.log(DatabaseError);
+        res.status(403).json({ DatabaseError });
+	}
+	res.status(403).json({ error: "there has been an unknown error"});
+
+});

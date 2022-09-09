@@ -15,9 +15,12 @@ export default async(req, res) =>{
             const responsestring = "Sucessful check in at: " + result.rows[0].datetime;
             res.status(200).json(responsestring); 
         }
-        catch(error){
-            console.log('error', error)
+        catch (error) {
+            const DatabaseError = error.message
+            console.log(DatabaseError);
+            res.status(403).json({ DatabaseError });
         }
+        res.status(403).json({ error: "there has been an unknown error", error});
     }
     else{
         return res.status(400).json({ data: 'request must be POST' })

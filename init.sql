@@ -14,6 +14,7 @@ CREATE TABLE users (
 	is_admin bool,
 	password varchar
 );
+
 create sequence users_id_seq owned by users.id;
 alter table users
    alter column id set default nextval('users_id_seq');
@@ -21,7 +22,7 @@ commit;
 
 CREATE TABLE projects (
 	id int PRIMARY KEY NOT NULL,
-	user_id int NOT NULL,
+	-- user_id int NOT NULL,
 	title varchar NOT NULL,
 	description varchar NOT NULL
 );
@@ -30,6 +31,12 @@ create sequence project_id_seq owned by projects.id;
 alter table projects
    alter column id set default nextval('project_id_seq');
 commit;
+
+CREATE TABLE users_projects_table (
+	user_id int NOT NULL REFERENCES users (id) ON UPDATE CASCADE, 
+	project_id int NOT NULL REFERENCES projects (id) ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT user_projects_pkey PRIMARY KEY (user_id, project_id)  -- explicit pk
+);
 
 CREATE TABLE epics (
 	id int PRIMARY KEY NOT NULL,
