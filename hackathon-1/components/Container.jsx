@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-=======
 import TaskInstance from "./TaskInstance"
->>>>>>> 8cf0abfe759cc6568d50607ff90d23e0a44b44a2
 
-import Task from "./Task"
 const Container = (props) => {
 
     const taskslist = props.tasks.map((task) => {
