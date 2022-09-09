@@ -4,7 +4,7 @@ const Navbar = () => {
 
     return(
         <nav className="nav-cont">
-            <p className="nav-title" href="/">  Fiscalizador - Aglomeración</p>
+            <a className="nav-title" href="/">  Fiscalizador - Aglomeración</a>
             <a href="/api/logout">Log out</a>
         </nav>
     )

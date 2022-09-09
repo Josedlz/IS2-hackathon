@@ -1,8 +1,6 @@
 import { databaseServiceFactory } from "../../services/databaseService";
 import { withSessionRoute } from "../../lib/session";
 
-// import bcrypt
-
 const dbService = databaseServiceFactory();
 
 export default // should be logged in
@@ -19,6 +17,7 @@ withSessionRoute
     
 	try {
         if(true){
+            /// MOCK API para una task
             
             //* PROJECTS */ 
 

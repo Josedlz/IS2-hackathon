@@ -30,7 +30,14 @@ const userServiceFactory = () => {
 		});
 	}
 
-	return { login, register, getTasks, markTaskDone };
+	function mockTask(email) {
+		console.log(email);
+		return axios.post(`/api/mockTask4User`, {
+			email
+		});
+	}
+
+	return { login, register, getTasks, markTaskDone, mockTask };
 };
 
 module.exports = {

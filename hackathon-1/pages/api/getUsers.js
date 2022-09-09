@@ -1,10 +1,11 @@
 import conn from "../../lib/db.js";
 import { databaseServiceFactory } from "../../services/databaseService";
+import { withSessionRoute } from "../../lib/session";
+
 const dbService = databaseServiceFactory();
 
-export default async (req, res) => {
-	// session route for authentication purposes xd
-
+export default // should be logged in and admin
+withSessionRoute(async (req, res) => {
 	const method = req.method.toLowerCase();
 
 	if (method !== "get") {
@@ -12,18 +13,23 @@ export default async (req, res) => {
 	}
 
 	try {
-		const users = await dbService.getAllUsers();
+		const user = req.session.email;
+		const userCredentials = await dbService.getUser(user);
 
-		console.log("getting users");
-		// const query = `SELECT * FROM users`;
-		// const result = await conn.query(query)
+		if (userCredentials.is_admin === true) {
+			const users = await dbService.getAllUsers();
 
-		res.status(200).json({ users });
-		return;
+			console.log("getting users");
+
+			res.status(200).json({ users });
+			return;
+		} else {
+			throw new Error("Not enough priviledges");
+		}
 	} catch (error) {
 		const DatabaseError = error.message;
 		console.log(DatabaseError);
 		res.status(403).json({ DatabaseError });
 	}
-	res.status(403).json({ error: "there has been an unknown error", error });
-};
+	res.status(403).json({ error: "there has been an unknown error" });
+});

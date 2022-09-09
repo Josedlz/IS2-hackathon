@@ -2,16 +2,12 @@ import { databaseServiceFactory } from "../../services/databaseService";
 import { withSessionRoute } from "../../lib/session";
 import * as bcrypt from "bcryptjs";
 
-// import bcrypt
-
 const dbService = databaseServiceFactory();
 const saltRounds = 11;
-// const saltRounds = process.env.SALT_ROUNDS;
 
-export default // should be logged in
-// withSessionRoute
+export default // should be logged in and admin
+withSessionRoute
 (async (req, res) => {
-	// const ERROR_CREDENTIALS = "Invalid email and/or password";
 
 	const method = req.method.toLowerCase();
 	const { first_name, last_name, email, password, is_admin } = req.body;
@@ -21,20 +17,13 @@ export default // should be logged in
 	}
 
 	try {
-		// const user = req.session.email;
+		const user = req.session.email;
+		const userCredentials = await dbService.getUser(user);
+		
 
-		// check if current user is admin
-
-		// const userCredentials = await dbService.getUser(req.session.email);
-		// if (userCredentials.is_admin === true) {
-		if (true) {
-
-			// const hashedpassword = bcrypt.hash(
-			// 	password,
-			// 	process.env.SALT_ROUNDS
-			// );
-
-			console.log(password,saltRounds);
+		if (userCredentials.is_admin === true) {
+			console.log("is admin!")
+			console.log(password, saltRounds);
 
 			bcrypt.hash(password, saltRounds, function (error, hash) {
 				console.log(first_name,last_name,email,hash,is_admin)
@@ -45,23 +34,16 @@ export default // should be logged in
 					hash,
 					is_admin
 				);
-
-				if (error)
-					throw Error("bad insert")
-			});
-
-			res.status(200).json({ msg: "sucessfully added user" });
-			return;
+			});	
+		} else{
+			throw new Error("Not enough priviledges")
 		}
+		return res.status(200).json({ msg: "Sucessfully added user" });
+
 	} catch (error) {
         const DatabaseError = error.message
 		console.log(DatabaseError);
         res.status(403).json({ DatabaseError });
 	}
-	res.status(403).json({ error: "there has been an unknown error", error});
+	res.status(403).json({ error: "there has been an unknown error" });
 });
-
-// async function saveSession(user, request) {
-// 	request.session.email = user;
-// 	await request.session.save();
-// }
