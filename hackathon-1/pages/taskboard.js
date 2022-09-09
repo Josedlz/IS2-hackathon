@@ -3,111 +3,90 @@ import Image from "next/image";
 import { withSessionSsr } from "../lib/session";
 import Button from "@mui/material/Button";
 
-import Navbar from "../components/Navbar"
-import Task from "../components/Task"
-import Container from "../components/Container"
-import taskdata from "./taskdata"
-import {useState} from "react"
+import Navbar from "../components/Navbar";
+import Container from "../components/Container";
+import taskdata from "./taskdata";
+import { useEffect, useState } from "react";
+import { userServiceFactory } from "../clientServices/userService";
 
-// require('../styles/Taskboard.css')
-// import styles from '../styles/Taskboard.module.css'
+const userService = userServiceFactory();
 
 export default function Taskboard({ user, admin }) {
+	const [DBtasks, setDBtasks] = useState("");
+	let set = false;
 
-    const [tasks, setTasks] = useState([...taskdata])
-    let incompelte = []
-    let complete = []
+	async function markDone(task_id) {
+		const response = await userService.markTaskDone(task_id);
+	}
 
-    for(let i = 0; i < tasks.length; i++) {
-        if(tasks[i].completed) {
-            complete.push(tasks[i])
-        }
-        else {
-            incompelte.push(tasks[i])
-        }
-    }
+	useEffect(() => {
+		async function getDBTasks() {
+			const response = await userService.getTasks(user);
+			setDBtasks(response.data.userTasks);
+			set = true;
+		}
 
-    let newtasks = [...tasks]
+		if (!set) {
+			getDBTasks();
+		}
+	}, []);
 
-    const toggleTask = (id) => {
-        const task = newtasks.find((t) => t.id === id)
-        task.completed = !task.completed
-    }
+	let incompelte = [];
+	let complete = [];
 
-    const completeTasks = () => {
-        setTasks(newtasks)
-    }
+	for (let i = 0; i < DBtasks.length; i++) {
+		if (DBtasks[i].completed) {
+			complete.push(DBtasks[i]);
+		} else {
+			incompelte.push(DBtasks[i]);
+		}
+	}
 
-    return (
-        <div>
-            <Navbar />
-            <div className="app-cont">
-                <Container title="Tareas por hacer" tasks={incompelte} toggleTask={toggleTask} completeTasks={completeTasks}/>
-                <div className="separator"></div>
-                <Container title="Tareas completadas"tasks={complete}/>
-            </div>
-        </div>
-    )
+	let newtasks = [...DBtasks];
+	const toggleTask = (id) => {
+		const task = newtasks.find((t) => t.id === id);
+		task.completed = !task.completed;
+	};
+
+	const completeTasks = () => {
+		const completed_tasks = newtasks.filter((t) => t.completed === true);
+		setDBtasks(newtasks);
+		for (var i = 0; i < completed_tasks.length; ++i) {
+			markDone(completed_tasks[i].id);
+		}
+	};
+
+	return (
+		<div>
+			<Navbar />
+			<div className="app-cont">
+				<Container
+					title="Tareas por hacer"
+					tasks={incompelte}
+					toggleTask={toggleTask}
+					completeTasks={completeTasks}
+				/>
+				<div className="separator"></div>
+				<Container title="Tareas completadas" tasks={complete} />
+			</div>
+		</div>
+	);
 }
 
-
 export const getServerSideProps = withSessionSsr(
-  async function getServerSideProps({ req, res }) {
-    const user = req.session.email;
+	async function getServerSideProps({ req, res }) {
+		const user = req.session.email;
 
-    if (user === undefined) {
-      console.log("no user")
-      res.setHeader("location", "/login");
-      res.statusCode = 302;
-      res.end();
-      return { props: {} };
-    }
+		if (user === undefined) {
+			console.log("no user");
+			res.setHeader("location", "/login");
+			res.statusCode = 302;
+			res.end();
+			return { props: {} };
+		}
 
-    return {
-      props: { user: req.session.email, admin: req.session.isAdmin },
-
-    };
-});
-
-
-
-// function App() {
-
-//     const [tasks, setTasks] = useState([...taskdata])
-//     let incompelte = []
-//     let complete = []
-
-//     for(let i = 0; i < tasks.length; i++) {
-//         if(tasks[i].completed) {
-//             complete.push(tasks[i])
-//         }
-//         else {
-//             incompelte.push(tasks[i])
-//         }
-//     }
-
-//     let newtasks = [...tasks]
-
-//     const toggleTask = (id) => {
-//         const task = newtasks.find((t) => t.id === id)
-//         task.completed = !task.completed
-//     }
-
-//     const completeTasks = () => {
-//         setTasks(newtasks)
-//     }
-
-//     return (
-//         <div>
-//             <Navbar />
-//             <div className="app-cont">
-//                 <Container title="Tareas por hacer" tasks={incompelte} toggleTask={toggleTask} completeTasks={completeTasks}/>
-//                 <div className="separator"></div>
-//                 <Container title="Tareas completadas"tasks={complete}/>
-//             </div>
-//         </div>
-//     )
-// }
-
-// export default App
-
+		return {
+			props: { user: req.session.email, admin: req.session.isAdmin },
+		};
+	}
+);

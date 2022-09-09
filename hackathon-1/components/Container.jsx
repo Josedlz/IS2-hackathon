@@ -1,9 +1,14 @@
+<<<<<<< HEAD
+=======
+import TaskInstance from "./TaskInstance"
+>>>>>>> 8cf0abfe759cc6568d50607ff90d23e0a44b44a2
 
 import Task from "./Task"
 const Container = (props) => {
 
     const taskslist = props.tasks.map((task) => {
-        return <Task key={task.id} toggleTask={props.toggleTask} {...task} />
+        // console.log(props.tasks)
+        return <TaskInstance key={task.id} toggleTask={props.toggleTask} {...task} />
     })
 
     const handleComplete = () => {

@@ -60,6 +60,7 @@ export default function Home({ user, admin }) {
 					<title>Home</title>
 				</Head>
 				<div className="stackv">
+<<<<<<< HEAD
 					<h2>Welcome to the home page {user}!</h2>
 					<h2>admin: {msg}</h2>
 		{
@@ -72,9 +73,29 @@ export default function Home({ user, admin }) {
          	 </Button> 
 		}		
           <a href="/taskboard">Go to my tasks</a>
-          <hr></hr>
+=======
+					<h2>Welcome to the home page, {user}!</h2>
+					{/* <h2>admin: {msg}</h2> */}
 
-					<a href="/api/logout">Log out</a>
+          <Button variant="contained" onClick={handleCheckIn} >
+            Check In! 
+          </Button> 
+					
+>>>>>>> 8cf0abfe759cc6568d50607ff90d23e0a44b44a2
+          <hr></hr>
+          <a href="/taskboard"> - Go to my tasks - </a>
+
+          {!admin ? (
+            <h1>no admin rights 😢</h1>
+          ) : (
+          <>
+            <h1>🔥🔥 ADMIN RIGHTS 🔥🔥</h1>
+
+            
+          </>
+          )}
+            
+
 				</div>
 			</div>
 		</div>

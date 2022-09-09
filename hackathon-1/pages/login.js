@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { userServiceFactory } from "../clientServices/userService";
 import useUser from "../lib/useUser";
+import Navbar from "../components/Navbar";
 
 const userService = userServiceFactory();
 
@@ -39,9 +40,10 @@ export default function Login() {
 			) : (
 				<>
 					{!user.isLoggedIn && (
-						
+						<>
+						<Navbar />
 						<form onSubmit={handleSubmit}>
-							<div>
+							<div className="stackv">
 								<h1>LOGIN TO FISCALIZADOR</h1>
 								<div className="imgcontainer">
 									<img
@@ -62,7 +64,7 @@ export default function Login() {
 
 								<div className="container">
 									<label htmlFor="email">
-										<b>Email</b>
+										<b>Email </b>
 									</label>
 									<input
 										type="email"
@@ -70,10 +72,10 @@ export default function Login() {
 										name="email"
 										required
 										onChange={emailHandler}
-									/>
-
+										/>
+										
 									<label htmlFor="psw">
-										<b>Password</b>
+										<b>     Password </b>
 									</label>
 									<input
 										type="password"
@@ -81,13 +83,14 @@ export default function Login() {
 										name="psw"
 										required
 										onChange={passwordHandler}
-									/>
+										/>
 
 									<button type="submit">Login</button>
 								</div>
 								
 							</div>
 						</form>
+						</>
 						
 					)}
 				</>

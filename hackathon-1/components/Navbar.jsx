@@ -4,7 +4,8 @@ const Navbar = () => {
 
     return(
         <nav className="nav-cont">
-            <p className="nav-title">Fiscalizador Pogeado</p>
+            <p className="nav-title" href="/">  Fiscalizador - Aglomeración</p>
+            <a href="/api/logout">Log out</a>
         </nav>
     )
 }
