@@ -1,5 +1,5 @@
-import Task from "./task"
 
+import Task from "./Task"
 const Container = (props) => {
 
     const taskslist = props.tasks.map((task) => {

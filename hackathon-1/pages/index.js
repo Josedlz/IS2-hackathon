@@ -1,21 +1,57 @@
 import Head from "next/head";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { withSessionSsr } from "../lib/session";
 import Button from "@mui/material/Button";
 import Navbar from "../components/Navbar";
 
+import postWorkingStatus from "./api.client/postWorkingStatus";
+import postCheckin from "./api.client/postCheckin";
+import postCheckout from "./api.client/postCheckout";
+
+// postCheckout
 export default function Home({ user, admin }) {
-  const handleCheckIn = async () => {
-    
+  const [working, setWorking] = useState(false);
+  useEffect(()=> {
+	(async () => {
+		try{
+			const response = await postWorkingStatus({email: user});
+			setWorking(response.data.working)
+		}
+		catch(e){
+			console.log('e',e)
+			setWorking(true)
+		}
+	})();
+  }, [])
+  const handleCheckout = async () => {
+	(async () => {
+		try{
+			const response = await postCheckout({email: user})
+			alert(response.data)
+			setWorking(false)
+			// setWorking(!response.data.working)
+		}
+		catch(e){
+			console.log('e',e)
+			setWorking(true)
+		}
+	})();
   }
-
-	console.log(user);
-	console.log(admin);
-	let msg = "";
-	if (admin === true) msg = "you're an admin!";
-	else msg = "you're not an admin :c";
-
+  const handleCheckIn = async () => {
+	try{
+		const body = {email: user} 
+		const response = await postCheckin(body);
+		setWorking(true)
+		alert(response.data)
+	}
+	catch(e){
+		console.log(e);
+		alert('Error checking in');
+	}
+  }
+	const msg = admin === true? "you're an admin!": "you're not an admin";
 	return (
 		<div>
 			<Navbar />
@@ -26,11 +62,15 @@ export default function Home({ user, admin }) {
 				<div className="stackv">
 					<h2>Welcome to the home page {user}!</h2>
 					<h2>admin: {msg}</h2>
-
-          <Button variant="contained" onClick={handleCheckIn} >
+		{
+			working?
+			<Button variant="contained"  onClick={handleCheckout} >
+			Check Out! 
+			</Button> :
+			<Button variant="contained"  onClick={handleCheckIn} >
             Check In! 
-          </Button> 
-					
+         	 </Button> 
+		}		
           <a href="/taskboard">Go to my tasks</a>
           <hr></hr>
 

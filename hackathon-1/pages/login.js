@@ -17,7 +17,7 @@ export default function Login() {
 		e.preventDefault();
 		try {
 			const user = await userService.login(email, password)
-			console.log('user', user)
+			console.log('userLOGIN', user)
 			mutateUser(user);
 		} catch (error) {
 			alert(error.response.data.error);
