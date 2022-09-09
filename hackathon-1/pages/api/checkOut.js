@@ -1,29 +1,37 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { databaseServiceFactory } from "../../services/databaseService";
 
-import conn from  '../../lib/db.js'
+import { HttpMethods } from './helpers/httpMethods.ts' 
+const dbService = databaseServiceFactory();
+
+const postCheckOut = async (req, res) => {
+    try{
+        const body = req.body;
+        if(!body.email)res.status(400).json({ data: 'missing email' })
+        const user = await dbService.getUser(body.email);
+        const user_id = user.id
+        const checkIfCheckId = await dbService.checkIfUserCheckedIn(user_id);
+        if(!checkIfCheckId) res.status(400).json({ data: 'user already checked out' }) 
+        const attendanceCheckin = await dbService.checkOutUser(user_id);
+        const dateTime = attendanceCheckin[0].datetime
+        const responsestring = `Sucessful check out at:  ${dateTime}`;
+        res.status(200).json(responsestring); 
+    }
+    catch(error){
+        console.log('error', error)
+    }
+}
+
 
 export default async(req, res) =>{
-    if (req.method === 'POST') {
-        try{
-            const body = req.body
-            console.log('body: ', body)
-            if(!body.user_id || !body.token){
-                return res.status(400).json({ data: 'missing form values' })
-            }
-            const query = `insert into attendance(user_id, event) values(${body.user_id}, 'checkout') returning datetime`            
-
-            const result = await conn.query(query)
-            const responsestring = "Sucessful check out at: " + result.rows[0].datetime;
-            res.status(200).json(responsestring); 
-        }
-        catch (error) {
-            const DatabaseError = error.message
-            console.log(DatabaseError);
-            res.status(403).json({ DatabaseError });
-        }
-        res.status(403).json({ error: "there has been an unknown error", error});
-    }
-    else{
-        return res.status(400).json({ data: 'request must be POST' })
+    switch (req.method) {
+        case HttpMethods.POST:
+            postCheckOut(req, res)
+            break;
+        case HttpMethods.GET:
+        case HttpMethods.PUT:
+        case HttpMethods.DELETE:
+        default:
+            return res.status(400).json({ data: 'request must be POST' })
     }
 }

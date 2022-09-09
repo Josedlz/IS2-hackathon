@@ -284,6 +284,19 @@ const databaseServiceFactory = () => {
 		return checkIn;
 	};
 
+	const checkOutUser = async (user_id) => {
+		const checkIn = await knex(ATTENDANCE_TABLE).insert({
+			user_id: user_id,
+			datetime: new Date(),
+			event: AttendanceEvents.CHECKOUT,
+
+		}).returning('datetime');
+
+		if (checkIn.length === 0) throw new Error ("Check out failed");
+
+		return checkIn;
+	};
+	
 	const checkIfUserCheckedIn = async (user_id) => {
 		const checkIn = await knex(ATTENDANCE_TABLE).select().where("user_id", user_id).orderBy("datetime", "desc").limit(1);
 		if (checkIn.length === 0) return false;
@@ -317,6 +330,7 @@ const databaseServiceFactory = () => {
 		updateComplete,
 		updateStage,
 		checkInUser, 
+		checkOutUser,
 		checkIfUserCheckedIn
 		 /*, resto de funciones */
 	};
