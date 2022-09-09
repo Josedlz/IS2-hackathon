@@ -6,6 +6,10 @@ import Button from "@mui/material/Button";
 import Navbar from "../components/Navbar";
 
 export default function Home({ user, admin }) {
+  const handleCheckIn = async () => {
+    
+  }
+
 	console.log(user);
 	console.log(admin);
 	let msg = "";
@@ -22,6 +26,10 @@ export default function Home({ user, admin }) {
 				<div className="stackv">
 					<h2>Welcome to the home page {user}!</h2>
 					<h2>admin: {msg}</h2>
+
+          <Button variant="contained" onClick={handleCheckIn} >
+            Check In! 
+          </Button> 
 					
           <a href="/taskboard">Go to my tasks</a>
           <hr></hr>

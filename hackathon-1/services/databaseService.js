@@ -1,3 +1,5 @@
+import {AttendanceEvents} from './helpers/attendanceEvents.ts';
+
 const knex = require("knex")({
 	client: "pg",
 	connection: {
@@ -9,6 +11,7 @@ const knex = require("knex")({
 	},
 });
 
+
 const databaseServiceFactory = () => {
 	const USERS_TABLE = "users";
 	const TASKS_TABLE = "tasks";
@@ -16,6 +19,7 @@ const databaseServiceFactory = () => {
 	const EPICS_TABLE = "epics";
 	const PROJECTS_TABLE = "projects";
 	const USER_PROJECTS_TABLE = "users_projects_table";
+	const ATTENDANCE_TABLE = "attendance";
 
 	//* USERS */ 
 
@@ -265,6 +269,27 @@ const databaseServiceFactory = () => {
 		return updatedStage[0];
 	}
 
+	//* CHECK IN - OUT */ 
+
+	const checkInUser = async (user_id) => {
+		const checkIn = await knex(ATTENDANCE_TABLE).insert({
+			user_id: user_id,
+			datetime: new Date(),
+			event: AttendanceEvents.CHECKIN,
+
+		}).returning('datetime');
+
+		if (checkIn.length === 0) throw new Error ("Check in failed");
+
+		return checkIn;
+	};
+
+	const checkIfUserCheckedIn = async (user_id) => {
+		const checkIn = await knex(ATTENDANCE_TABLE).select().where("user_id", user_id).orderBy("datetime", "desc").limit(1);
+		if (checkIn.length === 0) return false;
+		return checkIn[0].event === AttendanceEvents.CHECKIN;
+	};
+
 
 
 	/* si quieren hacer cualquier cosa con la database la pueden armar como una funcion
@@ -290,7 +315,9 @@ const databaseServiceFactory = () => {
 		getUserTasks,
 		updateScore,
 		updateComplete,
-		updateStage
+		updateStage,
+		checkInUser, 
+		checkIfUserCheckedIn
 		 /*, resto de funciones */
 	};
 };

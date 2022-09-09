@@ -16,7 +16,9 @@ export default function Login() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			mutateUser(await userService.login(email, password));
+			const user = await userService.login(email, password)
+			console.log('user', user)
+			mutateUser(user);
 		} catch (error) {
 			alert(error.response.data.error);
 		}
