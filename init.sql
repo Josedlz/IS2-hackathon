@@ -167,7 +167,7 @@ VALUES
 -- VALUES 
 -- (
 -- 	6,
--- 	'App para trackear animalitos perdidos',
+-- 	'App para trackear animalitos perdidos' que?? xd,
 -- 	'Una aplicacion que registrara fotos y ubicaciones de animales que podrian estar perdidos, para que cualquiera pueda verlos publicamente'
 -- ),
 -- (

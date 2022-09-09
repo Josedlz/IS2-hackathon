@@ -2,9 +2,14 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { withSessionSsr } from "../lib/session";
-import Button from "@mui/material/Button";
+import Button from '@mui/material/Button';
 
 export default function Home({ user }) {
+  const handleCheckIn = async () => {
+    
+  }
+
+
   return (
     <div>
       <Head>
@@ -12,6 +17,9 @@ export default function Home({ user }) {
       </Head>
 
       <h2>Welcome to the home page {user.email}!</h2>
+      <Button variant="contained" onClick={handleCheckIn} >
+        Check In! 
+      </Button> 
       <a href='/api/logout'>Logout</a>
     </div>
   )

@@ -20,13 +20,10 @@ export default withSessionRoute(async (req, res) => {
 		console.log("gotten");
 
 		console.log(userCredentials);
-		if (
-			(await authService.validate(password, userCredentials.password)) ===
-			true
-		) {
-			await saveSession({ email }, req);
+		if ((await authService.validate(password, userCredentials.password)) === true) {
+			await saveSession({ email, user_id: userCredentials.id }, req);
 			// res.status(200).json({ admin:userCredentials.is_admin });
-			res.status(200).json({ email });
+			res.status(200).json({ email, user_id: userCredentials.id });
 
 			return;
 		}

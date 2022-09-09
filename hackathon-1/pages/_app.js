@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps }) {
 			value={{
 				fetcher: fetch,
 				onError: (err) => {
-          console.log("erroraso")
+          			console.log("erroraso")
 					console.error(err);
 				},
 			}}

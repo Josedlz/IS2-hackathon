@@ -1,3 +1,5 @@
+import {AttendanceEvents} from './helpers/attendanceEvents.ts';
+
 const knex = require("knex")({
 	client: "pg",
 	connection: {
@@ -9,8 +11,10 @@ const knex = require("knex")({
 	},
 });
 
+
 const databaseServiceFactory = () => {
 	const TABLE = "users";
+	const ATTENDANCE_TABLE = "attendance";
 
 	const getUser = async (email) => {
 		const user = await knex(TABLE).select().where("email", email);
@@ -47,10 +51,30 @@ const databaseServiceFactory = () => {
 		return newuser;
 	};
 	
+
+	const checkInUser = async (user_id) => {
+		const checkIn = await knex(ATTENDANCE_TABLE).insert({
+			user_id: user_id,
+			datetime: new Date(),
+			event: AttendanceEvents.CHECKIN,
+
+		}).returning('datetime');
+
+		if (checkIn.length === 0) throw new Error ("Check in failed");
+
+		return checkIn;
+	};
+
+	const checkIfUserCheckedIn = async (user_id) => {
+		const checkIn = await knex(ATTENDANCE_TABLE).select().where("user_id", user_id).orderBy("datetime", "desc").limit(1);
+		if (checkIn.length === 0) return false;
+		return checkIn[0].event === AttendanceEvents.CHECKIN;
+	};
+
 	/* si quieren hacer cualquier cosa con la database la pueden armar como una funcion
 	parecida a las de arriba, usando knex para seleccionar o insertar*/
 
-	return { getUser, getAllUsers, enrollUser /*, resto de funciones */ };
+	return { getUser, getAllUsers, enrollUser, checkInUser, checkIfUserCheckedIn/*, resto de funciones */ };
 };
 
 module.exports = {
