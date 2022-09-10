@@ -3,7 +3,6 @@ import TaskInstance from "./TaskInstance"
 const Container = (props) => {
 
     const taskslist = props.tasks.map((task) => {
-        // console.log(props.tasks)
         return <TaskInstance key={task.id} toggleTask={props.toggleTask} {...task} />
     })
 
