@@ -21,6 +21,15 @@ const databaseServiceFactory = () => {
 	const USER_PROJECTS_TABLE = "users_projects_table";
 	const ATTENDANCE_TABLE = "attendance";
 
+	const testConnection = async () =>{
+		knex.raw("SELECT 1").then(() => {
+			console.log("DB online");
+		})
+		.catch((e) => {
+			throw new Error(e);
+		});
+	}
+
 	//* USERS */ 
 
 	const getUser = async (email) => {
@@ -331,7 +340,8 @@ const databaseServiceFactory = () => {
 		updateStage,
 		checkInUser, 
 		checkOutUser,
-		checkIfUserCheckedIn
+		checkIfUserCheckedIn,
+		testConnection
 		 /*, resto de funciones */
 	};
 };
