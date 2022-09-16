@@ -17,8 +17,8 @@ export default function Login() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const user = await userService.login(email, password)
-			console.log('userLOGIN', user)
+			const user = await userService.login(email, password);
+			console.log("userLOGIN", user);
 			mutateUser(user);
 		} catch (error) {
 			alert(error.response.data.error);
@@ -41,57 +41,54 @@ export default function Login() {
 				<>
 					{!user.isLoggedIn && (
 						<>
-						<Navbar />
-						<form onSubmit={handleSubmit}>
-							<div className="stackv">
-								<h1>LOGIN TO FISCALIZADOR</h1>
-								<div className="imgcontainer">
-									<img
-										src="https://i.imgur.com/H0AuOna.png"
-										alt="Avatar"
-										className="avatar"
-										style={{
-										height: "200px",
-										width: "200px",
-										borderRadius: 150,
-										overflow: "hidden",
-										borderWidth: 3,
-										borderColor: "red"
-									}}
-									/>
-									
-								</div>
-
-								<div className="container">
-									<label htmlFor="email">
-										<b>Email </b>
-									</label>
-									<input
-										type="email"
-										placeholder="Enter Email"
-										name="email"
-										required
-										onChange={emailHandler}
+							<Navbar />
+							<form onSubmit={handleSubmit}>
+								<div className="stackv">
+									<h1>LOGIN TO FISCALIZADOR</h1>
+									<div className="imgcontainer">
+										<img
+											src="https://i.imgur.com/H0AuOna.png"
+											alt="Avatar"
+											className="avatar"
+											style={{
+												height: "200px",
+												width: "200px",
+												borderRadius: 150,
+												overflow: "hidden",
+												borderWidth: 3,
+												borderColor: "red",
+											}}
 										/>
-										
-									<label htmlFor="psw">
-										<b>     Password </b>
-									</label>
-									<input
-										type="password"
-										placeholder="Enter Password"
-										name="psw"
-										required
-										onChange={passwordHandler}
+									</div>
+
+									<div className="container">
+										<label htmlFor="email">
+											<b>Email </b>
+										</label>
+										<input
+											type="email"
+											placeholder="Enter Email"
+											name="email"
+											required
+											onChange={emailHandler}
 										/>
 
-									<button type="submit">Login</button>
+										<label htmlFor="psw">
+											<b> Password </b>
+										</label>
+										<input
+											type="password"
+											placeholder="Enter Password"
+											name="psw"
+											required
+											onChange={passwordHandler}
+										/>
+
+										<button type="submit">Login</button>
+									</div>
 								</div>
-								
-							</div>
-						</form>
+							</form>
 						</>
-						
 					)}
 				</>
 			)}

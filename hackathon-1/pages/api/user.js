@@ -1,5 +1,4 @@
-import {withSessionRoute} from "../../lib/session";
-
+import { withSessionRoute } from "../../lib/session";
 
 export default withSessionRoute(async (req, res) => {
 	const user = req.session.email;
@@ -10,8 +9,8 @@ export default withSessionRoute(async (req, res) => {
 			...user,
 		});
 	} else {
-        res.json({
+		res.json({
 			isLoggedIn: false,
 		});
 	}
-})
+});
