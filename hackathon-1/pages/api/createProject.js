@@ -113,7 +113,8 @@ withSessionRoute(async (req, res) => {
 	} catch (error) {
 		const DatabaseError = error.message;
 		console.log(DatabaseError);
-		res.status(403).json({ DatabaseError });
+		res.status(403).json({error: "there has been an unknown error", DatabaseError });
+		// res.status(403).json({ DatabaseError });
 	}
-	res.status(403).json({ error: "there has been an unknown error", error });
+	// res.status(403).json({ error: "there has been an unknown error", error });
 });
