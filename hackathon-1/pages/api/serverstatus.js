@@ -1,6 +1,11 @@
+// import { useRouter  } from 'next/router'
+// import { GetServerSideProps, NextPage } from "next";
+
 export default async (req, res) => {
 	const method = req.method.toLowerCase();
-
+	// const { asPath, pathname } = useRouter();
+	// console.log(asPath); // '/blog/xyz'
+	// console.log(pathname); // '/blog/[slug]'
 	if (method !== "get") {
 		return res.status(405).end(`Method ${req.method} Not allowed`);
 	}
