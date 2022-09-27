@@ -93,3 +93,13 @@ services:
       - '3100:3100'
     volumes:
       - ./grafana_data:/var/lib/grafana
+
+  tunnel:
+    container_name: cloudflared-tunnel
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel run 
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARED_TOKEN}
+    #   - url= http://nginx:4000
+# docker run cloudflare/cloudflared:latest tunnel --no-autoupdate run --token eyJhIjoiYzk3ZThjZjUxZTA2YjhjZTIwNjFlMmQ4MzliODE0ZjQiLCJ0IjoiYmJkZmQyOGItNWUzYy00OWE4LTkyYWUtOWJiZTRiM2MyM2NjIiwicyI6IllUVm1ZVEkzWldZdE1ESmtaUzAwTW1aaExUaGxaV1F0TWpZMU5EWTFaRFkwTXpreCJ9
