@@ -31,6 +31,8 @@ services:
       - ./hackathon-1:/app
       - /app/node_modules
       - /app/.next
+    env_file:
+      - ./.env
     ports:
       - "3000"
     depends_on:
@@ -57,6 +59,8 @@ services:
     volumes:
         - './config/telegraf.conf:/etc/telegraf/telegraf.conf:ro'
         - '//var/run/docker.sock:/var/run/docker.sock'
+    env_file:
+      - ./.env
     depends_on:
       - influxdb
     links:
@@ -75,7 +79,9 @@ services:
     ports:
       - '8086:8086'
     volumes:
-      - ./influxdb_data:/var/lib/influxdb
+      - ./influxdb_data:/var/lib/influxdb2
+    env_file:
+      - ./.env
 
   grafana:
     image: grafana/grafana-oss:latest
@@ -103,3 +109,6 @@ services:
       - TUNNEL_TOKEN=${CLOUDFLARED_TOKEN}
     #   - url= http://nginx:4000
 # docker run cloudflare/cloudflared:latest tunnel --no-autoupdate run --token eyJhIjoiYzk3ZThjZjUxZTA2YjhjZTIwNjFlMmQ4MzliODE0ZjQiLCJ0IjoiYmJkZmQyOGItNWUzYy00OWE4LTkyYWUtOWJiZTRiM2MyM2NjIiwicyI6IllUVm1ZVEkzWldZdE1ESmtaUzAwTW1aaExUaGxaV1F0TWpZMU5EWTFaRFkwTXpreCJ9
+
+
+# influxdb-net
