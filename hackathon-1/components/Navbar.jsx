@@ -1,11 +1,10 @@
-
-
+import Link from 'next/link'
 const Navbar = () => {
 
     return(
         <nav className="nav-cont">
-            <a className="nav-title" href="/">  Fiscalizador - Aglomeración</a>
-            <a href="/api/logout">Log out</a>
+            <Link href="/"> <a className="nav-title" >  Fiscalizador - Aglomeración</a></Link>
+            <Link href="/api/logout"><a>Log out</a></Link>
         </nav>
     )
 }

@@ -5,15 +5,16 @@ import styles from "../styles/Home.module.css";
 import { withSessionSsr } from "../lib/session";
 import Button from "@mui/material/Button";
 import Navbar from "../components/Navbar";
+import Link from 'next/link'
 
 import { userServiceFactory } from "../clientServices/userService";
 import useUser from "../lib/useUser";
 
 const userService = userServiceFactory();
 
-import postWorkingStatus from "./api.client/postWorkingStatus";
-import postCheckin from "./api.client/postCheckin";
-import postCheckout from "./api.client/postCheckout";
+import postWorkingStatus from "../services/postWorkingStatus";
+import postCheckin from "../services/postCheckin";
+import postCheckout from "../services/postCheckout";
 
 // postCheckout
 export default function Home({ user, admin }) {
@@ -123,7 +124,7 @@ export default function Home({ user, admin }) {
 					)}
 
 					<hr></hr>
-					<a href="/taskboard"> - Go to my tasks - </a>
+				<Link href="/taskboard"><a> - Go to my tasks - </a></Link>
 
 					{!admin ? (
 						<h1>no admin rights 😢</h1>
