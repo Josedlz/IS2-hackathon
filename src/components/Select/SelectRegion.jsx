@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 
 function SelectRegion({uploadFiles}) {
   const [query, setQuery] = useState("");
-  
+
   useEffect(() => {
     uploadFiles(query)
-  }, [query]).
+  }, [query]);
 
   useEffect(() => {
     const interval = setInterval(() => {
