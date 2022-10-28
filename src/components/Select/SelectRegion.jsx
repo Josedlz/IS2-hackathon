@@ -18,6 +18,7 @@ function SelectRegion({uploadFiles, setQuery}) {
     const { value } = event.target;
     setQueryComponent(value);
     setQuery(value);
+    console.log("AAAAAAAAAAAAAAAAAAAA")
   };
 
   return (

@@ -10,6 +10,7 @@ const BarGraph = ({ votos_data }) => {
 
   return (
     <Box sx={{ mt: 5, md: 3, width: "85%" }}>
+        <h2>Conteo por Candidato</h2>
         <Bar
           data={{
             labels: candidatos,
@@ -18,7 +19,7 @@ const BarGraph = ({ votos_data }) => {
                 label: "Candidatos de la región ",
                 data: votos,
                 fill: true,
-                backgroundColor: "green",
+                backgroundColor: ["red", "blue", "green", "blue", "red", "blue"],
               },
             ],
           }}
