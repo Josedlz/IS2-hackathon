@@ -7,12 +7,38 @@ import BarGraph from './components/Graph/BarGraph';
 import BarGraph2 from './components/Graph/BarGraph2';
 import PieChart from './components/Graph/PieChart';
 import axios from 'axios';
+import { useEffect, useRef } from "react";
 
 const Home = () => {
-
     const [candidatosData, setCandidatosData] = useState([])
     const [regionesData, setRegionesData] = useState([])
     const [validoData, setValidoData] = useState([])
+
+    const query = useRef("")
+
+    const setQuery = (newQuery) => {
+        query.current = newQuery
+    }
+
+    useEffect(() => {
+      try{
+        getCandidatos(query.current)
+        getRegiones(query.current)
+
+      }catch(error){
+        console.log(error)
+      }
+    }, [query]);
+    
+    useEffect(() => {
+      const interval = setInterval(() => {
+        getCandidatos(query.current)
+      }, 3000);
+      getRegiones(query.current)
+      getValido()
+      return () => clearInterval(interval);
+    }, []);
+
 
     const getCandidatos = async (query) => {
       const url = `/votos/${query}`;
@@ -25,12 +51,12 @@ const Home = () => {
         setCandidatosData(res.data);
       }
       catch(error){
-        console.log("Error while uploading file ", err);
+        console.log("Error while uploading file ", error);
       }
     };
 
-    const getRegiones = async () => {
-        const url = `/region/`;
+    const getRegiones = async (query) => {
+        const url = `/region/${query}`;
         try{ 
           const res = await axios.get(url, { headers: {
               "Access-Control-Allow-Origin": "*",
@@ -62,12 +88,12 @@ const Home = () => {
     getValido()
     return (   
         <> 
-         <SelectRegion uploadFiles={getCandidatos}/>
-
+         <SelectRegion uploadFiles={getCandidatos} setQuery={setQuery}/>
             <Container>
                 <Grid container spacing={2}>
                     <Grid Item my={4}>
                     <Item>
+                        
                         <BarGraph votos_data={candidatosData} key="1" />
                     </Item>
                     <Item>
