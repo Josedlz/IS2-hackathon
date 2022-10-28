@@ -8,6 +8,7 @@ const PieChart = ({ votos_data }) => {
 
   return (
     <Box>
+      <h2>Conteo de Validéz</h2>
       <Doughnut
         data={{
         labels: disp,
