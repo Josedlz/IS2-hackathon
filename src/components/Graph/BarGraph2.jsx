@@ -6,7 +6,9 @@ import Chart from "chart.js/auto";
 const BarGraph2 = ({ votos_data }) => {
   const votos = votos_data.map((voto) => voto.conteo);
   const region = votos_data.map((region) => region.region);
-
+  console.log(votos_data)
+  console.log(votos)
+  console.log(region)
   return (
     <Box>
       <Bar
@@ -15,7 +17,7 @@ const BarGraph2 = ({ votos_data }) => {
               datasets: [
                 {
                   label: "Candidatos de la región ",
-                  data: region,
+                  data: votos,
                   fill: true,
                   backgroundColor: "green",
                 },

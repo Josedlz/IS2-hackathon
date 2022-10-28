@@ -5,6 +5,9 @@ import { Box } from "@mui/material";
 const PieChart = ({ votos_data }) => {
   const conteo = votos_data.map((conteo) => conteo.conteo);
   const disp = ["Válido", "No Válido"]
+
+  console.log(conteo)
+  console.log(disp)
   return (
     <Box>
       <Doughnut

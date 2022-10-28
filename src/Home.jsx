@@ -58,10 +58,12 @@ const Home = () => {
           console.log("Error while uploading file ", err);
         }
       };
-
+    getRegiones()
+    getValido()
     return (   
         <> 
          <SelectRegion uploadFiles={getCandidatos}/>
+
             <Container>
                 <Grid container spacing={2}>
                     <Grid Item my={4}>
