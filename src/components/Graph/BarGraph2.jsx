@@ -1,8 +1,28 @@
 import React from 'react'
+import { Box } from "@mui/material";
+import { Bar } from "react-chartjs-2";
+import Chart from "chart.js/auto";
 
-function BarGraph2() {
+const BarGraph2 = ({ votos_data }) => {
+  const votos = votos_data.map((voto) => voto.conteo);
+  const region = votos_data.map((region) => region.region);
+
   return (
-    <div>BarGraph2</div>
+    <Box>
+      <Bar
+        data={{
+              labels: region,
+              datasets: [
+                {
+                  label: "Candidatos de la región ",
+                  data: region,
+                  fill: true,
+                  backgroundColor: "green",
+                },
+              ],
+            }}
+          />
+    </Box>
   )
 }
 
