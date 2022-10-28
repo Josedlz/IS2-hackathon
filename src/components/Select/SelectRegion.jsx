@@ -1,22 +1,22 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 
-function SelectRegion({uploadFiles}) {
-  const [query, setQuery] = useState("");
+function SelectRegion({uploadFiles, setQuery}) {
+  const [query, setQueryComponent] = useState("");
 
-  useEffect(() => {
-    uploadFiles(query)
-  }, [query]);
+  // useEffect(() => {
+  //   uploadFiles(query)
+  // }, [query]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      uploadFiles(query)
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     uploadFiles(query)
+  //   }, 5000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   const handleChange = (event) => {
     const { value } = event.target;
+    setQueryComponent(value);
     setQuery(value);
   };
 
