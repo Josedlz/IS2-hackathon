@@ -15,7 +15,7 @@ const BarGraph2 = ({ votos_data }) => {
           labels: region,
           datasets: [
             {
-              label: "",
+              label: "votos totales",
               data: votos,
               fill: true,
               backgroundColor: ["red", "blue", "green", "blue", "red", "blue"],

@@ -2,25 +2,17 @@ import { useEffect, useState } from "react";
 
 function SelectRegion({uploadFiles, setQuery}) {
   const [query, setQueryComponent] = useState("");
-
-  // useEffect(() => {
-  //   uploadFiles(query)
-  // }, [query]);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     uploadFiles(query)
-  //   }, 5000);
-  //   return () => clearInterval(interval);
-  // }, []);
+  useEffect(() => {
+    setQuery("Lima");
+  }, []);
 
   const handleChange = (event) => {
     const { value } = event.target;
     setQueryComponent(value);
     setQuery(value);
-    console.log("AAAAAAAAAAAAAAAAAAAA")
+    console.log("Changed region")
   };
-
+  // setQuery("Lima");
   return (
     <div>
       <select
@@ -28,8 +20,9 @@ function SelectRegion({uploadFiles, setQuery}) {
         value={query.region}
         onChange={handleChange}
         name="region"
+        selected="Lima"
+        // defaultValue={{ label: "Lima", value: "Lima" }}
       >
-        <option value="">-- Choose --</option>
         <option value="Amazonas">Amazonas</option>
         <option value="Áncash">Áncash</option>
         <option value="Apurímac">Apurímac</option>
@@ -43,7 +36,7 @@ function SelectRegion({uploadFiles, setQuery}) {
         <option value="Junín">Junín</option>
         <option value="La Libertad">La Libertad</option>
         <option value="Lambayeque">Lambayeque</option>
-        <option value="Lima">Lima</option>
+        <option selected="selected" value="Lima">Lima</option>
         <option value="Madre de Dios">Madre de Dios</option>
         <option value="Moquegua">Moquegua</option>
         <option value="Pasco">Pasco</option>

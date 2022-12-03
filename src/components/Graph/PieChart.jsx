@@ -1,6 +1,7 @@
 import React from 'react'
 import { Doughnut } from "react-chartjs-2";
 import { Box } from "@mui/material";
+import { Chart } from "react-chartjs-2";
 
 const PieChart = ({ votos_data }) => {
   const conteo = votos_data.map((conteo) => conteo.conteo);
